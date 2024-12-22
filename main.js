@@ -1,22 +1,29 @@
-Webcam.set({
-    width:350,
-    height:300,
-    image_format:'png',
-    png_quality:90
-})
-camera= document.getElementById("camera");
-Webcam.attach('#camera')
-function take_snapshot(){
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
+let oscillator1 = null;
 
-   Webcam.snap(function(data_uri)  {
-    document.getElementById("result").innerHTML = '<img id= captured_image src="'+ data_uri + '"/>'
-   
+let oscillator2 = null;
 
+let gainNode = null;
 
-    });
+const frequencyInput = document.getElementById('frequency');
 
- 
-}
-console.log('ml5 version', ml5.version);
-classifier = m15.Imageclassifier("https://teachablemachine.withgoogle.com/models/B1btVtkNW/model.json",modelLoaded);
+const volumeSlider = document.getElementById('volume');
+
+const waveformSelector = document.getElementById('waveform');
+
+const startStopButton = document.getElementById('start-stop');
+
+const playBeatsButton = document.getElementById('play-beats');
+
+const beatFrequencyInput = document.getElementById('beat-frequency');
+
+const presetButtons = document.querySelectorAll('.preset-buttons button');
+
+const darkModeToggle = document.querySelector('.dark-mode-toggle');
+
+const volValue = document.getElementById('vol-value');
+
+const canvas = document.getElementById('oscilloscope');
+
+const canvasCtx = canvas.getContext('2d');
